@@ -2,7 +2,7 @@
   "name": "train",
   "version": "0.1.0",
   "private": true,
-  "homepage": "http://jarmop.github.io/projects/train/",
+  "homepage": "http://jarmop.github.io/train/",
   "dependencies": {
     "font-awesome": "^4.7.0",
     "geolib": "^2.0.24",
@@ -14,6 +14,11 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build"
+  },
+  "devDependencies": {
+    "gh-pages": "^1.1.0"
   }
 }
