@@ -119,6 +119,7 @@ class Tracker extends Component {
                     key={station.stationShortCode}
                     x={mapLonToMap(station.longitude)}
                     y={mapLatToMap(station.latitude)}
+                    name={station.stationName}
                 />
             )}
             <Train x={x1} y={y1} color={'green'}/>
@@ -129,15 +130,18 @@ class Tracker extends Component {
   }
 }
 
-let Station = ({x, y}) => (
-    <circle
-        cx={x}
-        cy={y}
-        r={5}
-        style={{
-          fill: 'red', stroke: 'black', strokeWidth: 1,
-        }}
-    />
+let Station = ({x, y, name}) => (
+    <svg x={x} y={y}>
+      <circle
+          cx={7}
+          cy={7}
+          r={5}
+          style={{
+            fill: 'red', stroke: 'black', strokeWidth: 1,
+          }}
+      />
+      <text x={14} y={14} fill="black">{name}</text>
+    </svg>
 );
 
 let Train = ({x, y, color}) => (
