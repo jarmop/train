@@ -3,7 +3,7 @@ import * as service from './TrackerService';
 import './Tracker.css';
 
 let minLon = 24.84;
-let maxLon = 25.09;
+let maxLon = 25.10;
 let minLat = 60.16;
 let maxLat = 60.33;
 
@@ -130,19 +130,23 @@ class Tracker extends Component {
   }
 }
 
-let Station = ({x, y, name}) => (
-    <svg x={x} y={y}>
-      <circle
-          cx={7}
-          cy={7}
-          r={5}
-          style={{
-            fill: 'red', stroke: 'black', strokeWidth: 1,
-          }}
-      />
-      <text x={14} y={14} fill="black">{name}</text>
-    </svg>
-);
+let Station = ({x, y, name}) => {
+  let radius = 6;
+  let strokeWidth = 1;
+  return (
+      <svg>
+        <circle
+            cx={x}
+            cy={y}
+            r={radius - strokeWidth}
+            style={{
+              fill: 'red', stroke: 'black', strokeWidth: strokeWidth,
+            }}
+        />
+        <text x={x + radius} y={y + radius} fill="black">{name}</text>
+      </svg>
+  );
+};
 
 let Train = ({x, y, color}) => (
     <circle

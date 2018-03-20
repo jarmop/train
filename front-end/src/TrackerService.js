@@ -12,7 +12,7 @@ export const getStations = () => {
   return fetch(URL_STATIONS)
       .then(response => response.json())
       .then(stations => {
-        let keharataStations = stations.filter(station => keharataStationCodes.includes(station.stationShortCode));
+        let keharataStations = stations.filter(station => station.passengerTraffic === true && keharataStationCodes.includes(station.stationShortCode));
         return keharataStations;
       })
       .catch();
