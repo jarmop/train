@@ -21,7 +21,7 @@ let mapLonToMap = (lon) => {
 };
 
 let mapLatToMap = (lat) => {
-  return Math.floor((lat - minLat) * latRatio);
+  return height - Math.floor((lat - minLat) * latRatio);
 };
 
 class Tracker extends Component {
@@ -113,33 +113,42 @@ class Tracker extends Component {
             <br/>
             Speed2: {data2.speed}
           </div>
-          <div>
-          </div>
-          <div className="tracker-map" style={{width: width, height: height}}>
+          <svg width={width} height={height}>
             {stations.map(station =>
-                <div
+                <Station
                     key={station.stationShortCode}
-                    className="tracker-map__station"
-                    style={{
-                      left: mapLonToMap(station.longitude) + 'px',
-                      bottom: mapLatToMap(station.latitude) + 'px'
-                    }}
-                >
-                  {station.stationName}
-                </div>
+                    x={mapLonToMap(station.longitude)}
+                    y={mapLatToMap(station.latitude)}
+                />
             )}
-            <div
-                className="tracker-map__train tracker-map__train--1"
-                style={{left: x1 + 'px', bottom: y1 + 'px'}}
-            ></div>
-            <div
-                className="tracker-map__train tracker-map__train--2"
-                style={{left: x2 + 'px', bottom: y2 + 'px'}}
-            ></div>
-          </div>
+            <Train x={x1} y={y1} color={'green'}/>
+            <Train x={x2} y={y2} color={'blue'}/>
+          </svg>
         </div>
     );
   }
 }
+
+let Station = ({x, y}) => (
+    <circle
+        cx={x}
+        cy={y}
+        r={5}
+        style={{
+          fill: 'red', stroke: 'black', strokeWidth: 1,
+        }}
+    />
+);
+
+let Train = ({x, y, color}) => (
+    <circle
+        cx={x}
+        cy={y}
+        r={5}
+        style={{
+          fill: color, stroke: 'black', strokeWidth: 1,
+        }}
+    />
+);
 
 export default Tracker;
