@@ -5,6 +5,7 @@ import {
   addLeadingZero,
 } from './service';
 import ApiRace from './ApiRace';
+import Detail from './Detail';
 
 const formatDate = (timestamp) => {
   let date = new Date(timestamp);
@@ -27,6 +28,7 @@ class App extends Component {
   render() {
     return (
         <div className="container">
+          <Detail/>
           <ApiRace/>
         </div>
     );

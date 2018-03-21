@@ -2,28 +2,6 @@ import React, {Component} from 'react';
 import * as service from './TrackerService';
 import './Tracker.css';
 
-let minLon = 24.84;
-let maxLon = 25.10;
-let minLat = 60.16;
-let maxLat = 60.33;
-
-let latRatio = 4000;
-let lonRatio = 2300;
-
-let width = (maxLon - minLon) * lonRatio;
-let height = (maxLat - minLat) * latRatio;
-
-// console.log(width);
-// console.log(height);
-
-let mapLonToMap = (lon) => {
-  return Math.floor((lon - minLon) * lonRatio);
-};
-
-let mapLatToMap = (lat) => {
-  return height - Math.floor((lat - minLat) * latRatio);
-};
-
 class ApiRace extends Component {
   constructor(props) {
     super(props);
@@ -96,39 +74,56 @@ class ApiRace extends Component {
       return '';
     }
 
-    let x1 = mapLonToMap(data1.longitude);
-    let y1 = mapLatToMap(data1.latitude);
-    let x2 = mapLonToMap(data2.longitude);
-    let y2 = mapLatToMap(data2.latitude);
-
     return (
         <div className="tracker">
           <div>
-            Coordinates1: {data1.longitude + ', ' + data1.latitude}
-            <br/>
-            Speed1: {data1.speed}
+            <b>rata.digitraffic.fi</b>
+            <Map data={data1} stations={stations}/>
           </div>
           <div>
-            Coordinates2: {data2.longitude + ', ' + data2.latitude}
-            <br/>
-            Speed2: {data2.speed}
+            <b>junatkartalla</b>
+            <Map data={data2} stations={stations}/>
           </div>
-          <svg width={width} height={height}>
-            {stations.map(station =>
-                <Station
-                    key={station.stationShortCode}
-                    x={mapLonToMap(station.longitude)}
-                    y={mapLatToMap(station.latitude)}
-                    name={station.stationName}
-                />
-            )}
-            <Train x={x1} y={y1} color={'green'}/>
-            <Train x={x2} y={y2} color={'blue'}/>
-          </svg>
         </div>
     );
   }
 }
+
+let Map = ({data, stations}) => {
+  let width = 160;
+  let height = 200;
+  let x = width / 2;
+  let y = height / 2;
+
+  // 0.01 coord point = 100px
+  let scale = 10000;
+  let latRatio = 4 / 10 * scale;
+  let lonRatio = 23 / 100 * scale;
+
+
+  return (
+      <div className="map-container">
+        <div>
+          Longitude: {data.longitude.toFixed(2)}
+          <br/>
+          Latitude: {data.latitude.toFixed(2)}
+          <br/>
+          Speed: {data.speed}
+        </div>
+        <svg width={width} height={height} className="map">
+          {stations.map(station =>
+              <Station
+                  key={station.stationShortCode}
+                  x={x + (station.longitude - data.longitude) * lonRatio}
+                  y={y - (station.latitude - data.latitude) * latRatio}
+                  name={station.stationName}
+              />
+          )}
+          <Train x={x} y={y} color={'green'}/>
+        </svg>
+      </div>
+  );
+};
 
 let Station = ({x, y, name}) => {
   let radius = 6;
@@ -143,7 +138,7 @@ let Station = ({x, y, name}) => {
               fill: 'red', stroke: 'black', strokeWidth: strokeWidth,
             }}
         />
-        <text x={x + radius} y={y + radius} fill="black">{name}</text>
+        <text x={x + radius} y={y + radius} fill="black" style={{fontSize: 12}}>{name}</text>
       </svg>
   );
 };

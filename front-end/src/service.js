@@ -148,12 +148,6 @@ export const updateOccupiedReverse = (log, occupied, previousDate, newDate) => {
   return newOccupied;
 };
 
-export const getInitialOccupied = (log) => {
-  // console.log(log.slice(0, 10));
-  // return [formatSectionId(log[0].station, log[0].trackSection)];
-  return [];
-};
-
 export const getOccupied = (trainNumber) => {
   let date = new Date();
   // date.setHours(-2);

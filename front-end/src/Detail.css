@@ -3,7 +3,7 @@
 }
 
 .station {
-    margin: 5px;
+    margin-right: 5px;
 }
 
 .station--current {
@@ -11,5 +11,5 @@
 }
 
 .track__direction {
-    margin: 5px;
+    margin-right: 5px;
 }
