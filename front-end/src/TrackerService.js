@@ -41,8 +41,8 @@ export const getLocation2 = (train) => {
           if (json.trains.hasOwnProperty(train)) {
             let trainData = json.trains[train];
             resolve({
-              longitude: trainData.longitude,
-              latitude: trainData.latitude,
+              longitude: parseFloat(trainData.longitude),
+              latitude: parseFloat(trainData.latitude),
               speed: trainData.speed,
             });
           } else {
