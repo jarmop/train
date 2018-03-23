@@ -17,9 +17,7 @@ class ApiRace extends Component {
     super(props);
 
     this.state = {
-      trainNumber: (new URL(window.location.href)).pathname.split('/')
-          .slice(-1)
-          .pop(),
+      trainNumber: props.trainNumber,
       data1: {
         longitude: 0,
         latitude: 0,

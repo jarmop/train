@@ -1,35 +1,21 @@
 import React, {Component} from 'react';
+import {Route} from 'react-router-dom';
 import 'font-awesome/css/font-awesome.css';
 import 'styles/App.css';
-import {
-  addLeadingZero,
-} from 'services/service';
 import ApiRace from 'components/ApiRace';
 import Detail from 'components/Detail';
-
-const formatDate = (timestamp) => {
-  let date = new Date(timestamp);
-  return addLeadingZero(date.getHours())
-      + ':'
-      + addLeadingZero(date.getMinutes())
-      + ':'
-      + addLeadingZero(date.getSeconds());
-};
 
 class App extends Component {
   constructor(props) {
     super(props);
-
-  }
-
-  componentDidMount() {
   }
 
   render() {
     return (
         <div className="container">
-          <Detail/>
-          <ApiRace/>
+          <header>erwfew</header>
+          <Route exact path="/" component={Home}/>
+          <Route path="/:train" component={Train}/>
         </div>
     );
   }
@@ -37,8 +23,15 @@ class App extends Component {
 
 export default App;
 
-let Track = () => (
-    <div className="track">
-      <div className="train"></div>
+let Home = () => (
+    <div>
+      Kannelmäen junat
+    </div>
+);
+
+let Train = ({match}) => (
+    <div>
+      <Detail/>
+      <ApiRace trainNumber={match.params.train}/>
     </div>
 );
