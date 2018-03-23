@@ -27,6 +27,7 @@ export const getLocation = (train) => {
           longitude: json.location.coordinates[0],
           latitude: json.location.coordinates[1],
           speed: json.speed,
+          updated: new Date(json.timestamp),
         }
       })
       .catch();
@@ -44,6 +45,7 @@ export const getLocation2 = (train) => {
               longitude: parseFloat(trainData.longitude),
               latitude: parseFloat(trainData.latitude),
               speed: trainData.speed,
+              updated: new Date(trainData.updated),
             });
           } else {
             reject('not updated');

@@ -1,6 +1,16 @@
 import React, {Component} from 'react';
 import * as service from './TrackerService';
 import './Tracker.css';
+import {addLeadingZero} from './service';
+
+const formatDate = (timestamp) => {
+  let date = new Date(timestamp);
+  return addLeadingZero(date.getHours())
+      + ':'
+      + addLeadingZero(date.getMinutes())
+      + ':'
+      + addLeadingZero(date.getSeconds());
+};
 
 class ApiRace extends Component {
   constructor(props) {
@@ -32,13 +42,14 @@ class ApiRace extends Component {
 
   updateLocation() {
     service.getLocation(this.state.trainNumber)
-        .then(({longitude, latitude, speed}) => {
+        .then(({longitude, latitude, speed, updated}) => {
           console.log('update 1');
           this.setState({
             data1: {
               longitude,
               latitude,
               speed,
+              updated,
             }
           });
         })
@@ -46,13 +57,14 @@ class ApiRace extends Component {
           console.log(message);
         });
     service.getLocation2(this.state.trainNumber)
-        .then(({longitude, latitude, speed}) => {
+        .then(({longitude, latitude, speed, updated}) => {
           console.log('update 2');
           this.setState({
             data2: {
               longitude,
               latitude,
               speed,
+              updated,
             }
           });
         })
@@ -104,11 +116,13 @@ let Map = ({data, stations}) => {
   return (
       <div className="map-container">
         <div>
-          Longitude: {data.longitude.toFixed(2)}
+          Longitude: {data.longitude.toFixed(4)}
           <br/>
-          Latitude: {data.latitude.toFixed(2)}
+          Latitude: {data.latitude.toFixed(4)}
           <br/>
           Speed: {data.speed}
+          <br/>
+          Updated: {formatDate(data.updated)}
         </div>
         <svg width={width} height={height} className="map">
           {stations.map(station =>
