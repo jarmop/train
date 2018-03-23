@@ -1,4 +1,4 @@
-import stoppingSections from './data/stopping-sections';
+import stoppingSections from 'data/stopping-sections';
 
 let keharataStationCodes = Object.keys(stoppingSections);
 

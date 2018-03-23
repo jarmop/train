@@ -1,6 +1,6 @@
-import sections from './data/sections';
-import stoppingSections from './data/stopping-sections';
-import log from './data/9172';
+import sections from 'data/sections';
+import stoppingSections from 'data/stopping-sections';
+import log from 'data/9172';
 // import log from './data/8767';
 
 // const TRAIN_URL = 'https://junatkartalla-cal-prod.herokuapp.com/trains/1520974201460';

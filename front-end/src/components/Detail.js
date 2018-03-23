@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
-import './Detail.css';
-import {getOccupied} from './service';
+import 'styles/Detail.css';
+import {getOccupied} from 'services/service';
 
 class Detail extends Component {
   constructor(props) {
