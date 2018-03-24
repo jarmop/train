@@ -16,6 +16,8 @@ class ApiRace extends Component {
   constructor(props) {
     super(props);
 
+    this.isPollingEnabled = true;
+
     this.state = {
       trainNumber: props.trainNumber,
       data1: {
@@ -33,8 +35,11 @@ class ApiRace extends Component {
 
   poll() {
     setTimeout(() => {
-      this.updateLocation();
-      this.poll();
+      if (this.isPollingEnabled) {
+        this.updateLocation();
+        this.poll();
+      }
+
     }, 5000);
   }
 
@@ -74,7 +79,12 @@ class ApiRace extends Component {
   componentDidMount() {
     service.getStations().then(stations => this.setState({stations}));
     this.updateLocation();
+    this.isPollingEnabled = true;
     this.poll();
+  }
+
+  componentWillUnmount() {
+    this.isPollingEnabled = false;
   }
 
   render() {
@@ -109,7 +119,6 @@ let Map = ({data, stations}) => {
   let scale = 10000;
   let latRatio = 4 / 10 * scale;
   let lonRatio = 23 / 100 * scale;
-
 
   return (
       <div className="map-container">
@@ -150,7 +159,8 @@ let Station = ({x, y, name}) => {
               fill: 'red', stroke: 'black', strokeWidth: strokeWidth,
             }}
         />
-        <text x={x + radius} y={y + radius} fill="black" style={{fontSize: 12}}>{name}</text>
+        <text x={x + radius} y={y + radius} fill="black"
+              style={{fontSize: 12}}>{name}</text>
       </svg>
   );
 };

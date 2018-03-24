@@ -19,18 +19,27 @@ export const getStations = () => {
 };
 
 export const getLocation = (train) => {
-  return fetch(URL_LOCATION.replace(/\[TRAIN_NUMBER\]/, train))
-      .then(response => response.json())
-      .then(json => {
-        json = json[0];
-        return {
-          longitude: json.location.coordinates[0],
-          latitude: json.location.coordinates[1],
-          speed: json.speed,
-          updated: new Date(json.timestamp),
-        }
-      })
-      .catch();
+  return new Promise((resolve, reject) => {
+    fetch(URL_LOCATION.replace(/\[TRAIN_NUMBER\]/, train))
+        .then(response => response.json())
+        .then(json => {
+          if (json.length > 0) {
+            json = json[0];
+            resolve({
+              longitude: json.location.coordinates[0],
+              latitude: json.location.coordinates[1],
+              speed: json.speed,
+              updated: new Date(json.timestamp),
+            });
+          } else {
+            reject('not found')
+          }
+
+        })
+        .catch(message => {
+          reject(message);
+        });
+  });
 };
 
 export const getLocation2 = (train) => {
