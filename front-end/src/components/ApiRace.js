@@ -85,7 +85,7 @@ class ApiRace extends Component {
   render() {
     let {data1, data2, oldData1, oldData2, stations} = this.state;
 
-    if (!stations || !oldData1 || !oldData2) {
+    if (!stations) {
       return '';
     }
 
@@ -119,26 +119,38 @@ let Map = ({data, oldData, stations}) => {
       <div className="map-container">
         <table>
           <tbody>
-            <tr>
-              <th>Longitude:</th>
-              <td>{data.longitude.toFixed(4)}</td>
-              <td>({(data.longitude - oldData.longitude).toFixed(4)})</td>
-            </tr>
-            <tr>
-              <th>Latitude:</th>
-              <td>{data.latitude.toFixed(4)}</td>
-              <td>({(data.latitude - oldData.latitude).toFixed(4)})</td>
-            </tr>
-            <tr>
-              <th>Speed:</th>
-              <td>{data.speed}</td>
-              <td>({data.speed - oldData.speed})</td>
-            </tr>
-            <tr>
-              <th>Updated:</th>
-              <td>{formatDate(data.updated)}</td>
-              <td>({parseInt((data.updated.getTime() - oldData.updated.getTime()) / 1000)} s)</td>
-            </tr>
+          <tr>
+            <th>Longitude:</th>
+            <td>{data.longitude.toFixed(4)}</td>
+            {oldData &&
+            <td>({(data.longitude - oldData.longitude).toFixed(4)})</td>
+            }
+          </tr>
+          <tr>
+            <th>Latitude:</th>
+            <td>{data.latitude.toFixed(4)}</td>
+            {oldData &&
+            <td>({(data.latitude - oldData.latitude).toFixed(4)})</td>
+            }
+          </tr>
+          <tr>
+            <th>Speed:</th>
+            <td>{data.speed}</td>
+            {oldData &&
+            <td>({data.speed - oldData.speed})</td>
+            }
+          </tr>
+          <tr>
+            <th>Updated:</th>
+            <td>{formatDate(data.updated)}</td>
+            {oldData &&
+            <td>
+              ({parseInt(
+                (data.updated.getTime() - oldData.updated.getTime()) / 1000
+            )} s)
+            </td>
+            }
+          </tr>
           </tbody>
         </table>
         <svg width={width} height={height} className="map">
