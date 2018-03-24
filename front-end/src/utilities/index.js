@@ -10,3 +10,7 @@ export const formatDate = (timestamp) => {
       + ':'
       + addLeadingZero(date.getSeconds());
 };
+
+export const getUrl = (path) => {
+  return process.env.PUBLIC_URL + path;
+};

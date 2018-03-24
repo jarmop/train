@@ -3,6 +3,7 @@ import {Link} from 'react-router-dom';
 import {getTrainsByStation} from 'services/TrainsService';
 import {formatDate} from 'utilities';
 import 'styles/Station.css';
+import {getUrl} from '../utilities';
 
 let urlNameToHumanReadableName = {
   'kannelmaki': 'Kannelmäki',
@@ -33,7 +34,7 @@ class App extends Component {
           {urlNameToHumanReadableName[station]}
           {trains.map(train =>
               <div key={train.number}>
-                <Link to={'/' + train.number}>
+                <Link to={getUrl('/' + train.number)}>
                   {formatDate(train.scheduledDepartureTime)}
                   {' - '}
                   {train.number}

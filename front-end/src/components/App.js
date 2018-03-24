@@ -5,6 +5,7 @@ import 'styles/App.css';
 import ApiRace from 'components/ApiRace';
 import Detail from 'components/Detail';
 import Station from 'components/Station';
+import {getUrl} from 'utilities';
 
 class App extends Component {
   constructor(props) {
@@ -14,9 +15,9 @@ class App extends Component {
   render() {
     return (
         <div className="container">
-          <Route exact path="/" component={Home}/>
-          <Route path="/station/:station(kannelmaki|huopalahti)" component={Station}/>
-          <Route exact path="/:train" component={Train}/>
+          <Route exact path={getUrl('/')} component={Home}/>
+          <Route path={getUrl('/station/:station(kannelmaki|huopalahti)')} component={Station}/>
+          <Route exact path={getUrl('/:train')} component={Train}/>
         </div>
     );
   }
@@ -26,9 +27,9 @@ export default App;
 
 let Home = () => (
     <div>
-      <Link to="/station/kannelmaki">Kannelmäki</Link>
+      <Link to={getUrl('/station/kannelmaki')}>Kannelmäki</Link>
       <br/>
-      <Link to="/station/huopalahti">Huopalahti</Link>
+      <Link to={getUrl('/station/huopalahti')}>Huopalahti</Link>
     </div>
 );
 
