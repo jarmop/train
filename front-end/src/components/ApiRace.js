@@ -105,7 +105,7 @@ class ApiRace extends Component {
 }
 
 let Map = ({data, oldData, stations}) => {
-  let width = 170;
+  let width = 175;
   let height = 200;
   let x = width / 2;
   let y = height / 2;

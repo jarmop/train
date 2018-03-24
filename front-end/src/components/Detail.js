@@ -59,7 +59,7 @@ class Detail extends Component {
             </div>
             <div><i className="detail-track__direction fa fa-angle-double-right"></i>
             </div>
-            <div className="derail__station detail__station--current">
+            <div className="detail__station detail__station--current">
               {occupied.current}
             </div>
             <div><i className="detail-track__direction fa fa-angle-double-right"></i>

@@ -8,16 +8,17 @@
     text-align: left;
 }
 
-.station-train-table th, .station-train-table td {
+.station-train-table__element {
     padding: 10px;
+}
+
+.station-train-table__element--centered {
+    padding: 0 10px;
+    text-align: center;
 }
 
 .station-train-table th {
     background-color: #eaeaea;
-}
-
-.station-train-table__element--centered {
-    text-align: center;
 }
 
 .station-train-table__train {

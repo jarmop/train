@@ -37,19 +37,19 @@ class App extends Component {
           <table className="station-train-table">
             <thead>
             <tr>
-              <th>Departs</th>
-              <th className="station-train-table__element--centered">Code</th>
-              <th>Number</th>
-              <th className="station-train-table__element--centered">track</th>
+              <th className="station-train-table__element">Departs</th>
+              <th className="station-train-table__element station-train-table__element--centered">Code</th>
+              <th className="station-train-table__element">Number</th>
+              <th className="station-train-table__element station-train-table__element--centered">track</th>
             </tr>
             </thead>
             <tbody>
             {trains.map(train =>
                 <tr className="station-train-table__train">
-                  <td>
+                  <td className="station-train-table__element">
                     {formatTimeShort(train.scheduledDepartureTime)}
                   </td>
-                  <td className="station-train-table__element--centered">
+                  <td className="station-train-table__element station-train-table__element--centered">
                     <Link
                         key={train.number}
                         to={getUrl('/' + train.number)}
@@ -58,10 +58,10 @@ class App extends Component {
                       {train.code}
                     </Link>
                   </td>
-                  <td>
+                  <td className="station-train-table__element">
                     {train.number}
                   </td>
-                  <td className="station-train-table__element--centered">
+                  <td className="station-train-table__element station-train-table__element--centered">
                     {train.track}
                   </td>
                 </tr>
