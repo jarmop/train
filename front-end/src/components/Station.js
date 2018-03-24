@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {Link} from 'react-router-dom';
 import {getTrainsByStation} from 'services/TrainsService';
-import {formatDate} from 'utilities';
+import {formatTimeShort} from 'utilities';
 import 'styles/Station.css';
 import {getUrl} from '../utilities';
 
@@ -33,15 +33,13 @@ class App extends Component {
         <div className="station">
           {urlNameToHumanReadableName[station]}
           {trains.map(train =>
-              <div key={train.number}>
-                <Link to={getUrl('/' + train.number)}>
-                  {formatDate(train.scheduledDepartureTime)}
+              <Link key={train.number} to={getUrl('/' + train.number)} className="station__train-link">
+                  {formatTimeShort(train.scheduledDepartureTime)}
                   {' - '}
                   {train.number}
                   {' - '}
                   {train.letter}
-                </Link>
-              </div>
+              </Link>
           )}
         </div>
     );

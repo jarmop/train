@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import * as service from 'services/TrackerService';
 import 'styles/ApiRace.css';
-import {formatDate} from 'utilities';
+import {formatTime} from 'utilities';
 
 class ApiRace extends Component {
   constructor(props) {
@@ -105,7 +105,7 @@ class ApiRace extends Component {
 }
 
 let Map = ({data, oldData, stations}) => {
-  let width = 160;
+  let width = 170;
   let height = 200;
   let x = width / 2;
   let y = height / 2;
@@ -142,7 +142,7 @@ let Map = ({data, oldData, stations}) => {
           </tr>
           <tr>
             <th>Updated:</th>
-            <td>{formatDate(data.updated)}</td>
+            <td>{formatTime(data.updated)}</td>
             {oldData &&
             <td>
               ({parseInt(

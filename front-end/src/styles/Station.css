@@ -1,4 +1,11 @@
-.station a {
+.station__train-link {
     text-decoration: none;
     color: black;
+    padding: 10px;
+    display: block;
+    background-color: #eaeaea;
+}
+
+.station__train-link:first-child, .station__train-link:nth-child(2n+3) {
+    background-color: white;
 }
