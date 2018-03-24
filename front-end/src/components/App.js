@@ -15,9 +15,14 @@ class App extends Component {
   render() {
     return (
         <div className="container">
-          <Route exact path={getUrl('/')} component={Home}/>
-          <Route path={getUrl('/station/:station(kannelmaki|huopalahti)')} component={Station}/>
-          <Route exact path={getUrl('/:train')} component={Train}/>
+          <header>
+            <Link to={getUrl('/')} className="">Home</Link>
+          </header>
+          <main>
+            <Route exact path={getUrl('/')} component={Home}/>
+            <Route path={getUrl('/station/:station(kannelmaki|huopalahti)')} component={Station}/>
+            <Route exact path={getUrl('/:train')} component={Train}/>
+          </main>
         </div>
     );
   }

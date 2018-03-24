@@ -53,18 +53,18 @@ class Detail extends Component {
 
     return (
         <div className="detail">
-          <div className="track">
-            <div className="station">
+          <div className="detail-track">
+            <div className="detail__station">
               {occupied.previous}
             </div>
-            <div><i className="track__direction fa fa-angle-double-right"></i>
+            <div><i className="detail-track__direction fa fa-angle-double-right"></i>
             </div>
-            <div className="station station--current">
+            <div className="derail__station detail__station--current">
               {occupied.current}
             </div>
-            <div><i className="track__direction fa fa-angle-double-right"></i>
+            <div><i className="detail-track__direction fa fa-angle-double-right"></i>
             </div>
-            <div className="station">
+            <div className="detail__station">
               {occupied.next}
             </div>
           </div>

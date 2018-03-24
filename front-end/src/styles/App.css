@@ -1,17 +1,12 @@
 .container {
-    margin: 5px;
 }
 
-.control {
-    position: fixed;
-    right: 20px;
-    display: flex;
-    flex-direction: column;
+header {
+    padding: 10px;
+    background-color: lawngreen;
 }
 
-.control__button {
-    font-size: 50px;
-    cursor: pointer;
+main {
 }
 
 .station-link {

@@ -7,6 +7,8 @@ const mapStationNameToStationShortCode = {
   'huopalahti': 'HPL',
 };
 
+let train: {number: int};
+
 export const getTrainsByStation = (stationName) => {
   let stationShortCode = mapStationNameToStationShortCode[stationName];
   return fetchTrainsByStation(stationShortCode).then(trains => {
@@ -21,11 +23,19 @@ export const getTrainsByStation = (stationName) => {
               )
               .pop();
 
-          return {
+          let trainObject: {
+            number: int,
+            code: string,
+            scheduledDepartureTime: Date,
+            track: int,
+          } = {
             number: train.trainNumber,
-            letter: train.commuterLineID,
-            scheduledDepartureTime: new Date(departureTimetable.scheduledTime)
+            code: train.commuterLineID,
+            scheduledDepartureTime: new Date(departureTimetable.scheduledTime),
+            track: parseInt(departureTimetable.commercialTrack),
           };
+
+          return trainObject;
         })
         .sort((trainA, trainB) =>
             trainA.scheduledDepartureTime.getTime() - trainB.scheduledDepartureTime.getTime()

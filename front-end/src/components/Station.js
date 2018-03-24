@@ -31,16 +31,44 @@ class App extends Component {
 
     return (
         <div className="station">
-          {urlNameToHumanReadableName[station]}
-          {trains.map(train =>
-              <Link key={train.number} to={getUrl('/' + train.number)} className="station__train-link">
-                  {formatTimeShort(train.scheduledDepartureTime)}
-                  {' - '}
-                  {train.number}
-                  {' - '}
-                  {train.letter}
-              </Link>
-          )}
+          <h1 className="station__name">
+            {urlNameToHumanReadableName[station]}
+          </h1>
+          <table className="station-train-table">
+            <thead>
+            <tr>
+              <th>Departs</th>
+              <th className="station-train-table__element--centered">Code</th>
+              <th>Number</th>
+              <th className="station-train-table__element--centered">track</th>
+            </tr>
+            </thead>
+            <tbody>
+            {trains.map(train =>
+                <tr className="station-train-table__train">
+                  <td>
+                    {formatTimeShort(train.scheduledDepartureTime)}
+                  </td>
+                  <td className="station-train-table__element--centered">
+                    <Link
+                        key={train.number}
+                        to={getUrl('/' + train.number)}
+                        className="station-train-link"
+                    >
+                      {train.code}
+                    </Link>
+                  </td>
+                  <td>
+                    {train.number}
+                  </td>
+                  <td className="station-train-table__element--centered">
+                    {train.track}
+                  </td>
+                </tr>
+            )}
+            </tbody>
+          </table>
+
         </div>
     );
   }

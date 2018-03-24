@@ -1,15 +1,19 @@
-.track {
+.detail {
+    margin: 5px;
+}
+
+.detail-track {
     display: flex;
 }
 
-.station {
+.detail__station {
     margin-right: 5px;
 }
 
-.station--current {
+.detail__station--current {
     color: green;
 }
 
-.track__direction {
+.detail-track__direction {
     margin-right: 5px;
 }
