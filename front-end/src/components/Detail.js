@@ -6,28 +6,34 @@ class Detail extends Component {
   constructor(props) {
     super(props);
 
+    this.isPollingEnabled = true;
+
     this.state = {
       occupied: {
         current: null,
         next: null,
         previous: null,
       },
-      trainNumber: (new URL(window.location.href)).pathname.split('/').slice(-1).pop(),
+      trainNumber: props.trainNumber,
     };
   }
 
   poll() {
     setTimeout(() => {
-      this.updateLocation();
-
-      this.poll();
+      if (this.isPollingEnabled) {
+        this.updateLocation();
+        this.poll();
+      }
     }, 5000);
   }
 
   componentDidMount() {
     this.updateLocation();
-
     this.poll();
+  }
+
+  componentWillUnmount() {
+    this.isPollingEnabled = false;
   }
 
   updateLocation() {
@@ -42,29 +48,11 @@ class Detail extends Component {
         });
   }
 
-  // updateTrain() {
-  //   this.setState({
-  //     trainNumber: this.domObject.value
-  //   }, () => this.updateLocation());
-  // }
-
   render() {
-    let {occupied, trainNumber} = this.state;
-    // console.log(occupied);
+    let {occupied} = this.state;
 
     return (
         <div className="detail">
-          {/*<div className="detail__train-input">*/}
-            {/*<input*/}
-                {/*type="text"*/}
-                {/*ref={domObject => this.domObject = domObject}*/}
-            {/*/>*/}
-            {/*<button onClick={event => this.updateTrain()}>*/}
-              {/*Hae*/}
-            {/*</button>*/}
-            {/*{trainNumber}*/}
-          {/*</div>*/}
-
           <div className="track">
             <div className="station">
               {occupied.previous}
