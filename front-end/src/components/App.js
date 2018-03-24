@@ -27,9 +27,8 @@ export default App;
 
 let Home = () => (
     <div>
-      <Link to={getUrl('/station/kannelmaki')}>Kannelmäki</Link>
-      <br/>
-      <Link to={getUrl('/station/huopalahti')}>Huopalahti</Link>
+      <Link to={getUrl('/station/kannelmaki')} className="station-link">Kannelmäki</Link>
+      <Link to={getUrl('/station/huopalahti')} className="station-link">Huopalahti</Link>
     </div>
 );
 

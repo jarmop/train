@@ -14,6 +14,11 @@
     cursor: pointer;
 }
 
+.station-link {
+    display: block;
+    margin: 10px;
+}
+
 /*.track {*/
 /*margin: 80px 20px;*/
 /*display: flex;*/
