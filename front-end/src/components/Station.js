@@ -4,6 +4,11 @@ import {getTrainsByStation} from 'services/TrainsService';
 import {formatDate} from 'utilities';
 import 'styles/Station.css';
 
+let urlNameToHumanReadableName = {
+  'kannelmaki': 'Kannelmäki',
+  'huopalahti': 'Huopalahti',
+};
+
 class App extends Component {
   constructor(props) {
     super(props);
@@ -20,11 +25,12 @@ class App extends Component {
   }
 
   render() {
+    let {station} = this.props.match.params;
     let {trains} = this.state;
 
     return (
         <div className="station">
-          Kannelmäki
+          {urlNameToHumanReadableName[station]}
           {trains.map(train =>
               <div key={train.number}>
                 <Link to={'/' + train.number}>

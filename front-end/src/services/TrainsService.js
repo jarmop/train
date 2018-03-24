@@ -28,7 +28,7 @@ export const getTrainsByStation = (stationName) => {
           };
         })
         .sort((trainA, trainB) =>
-            trainA.scheduledDepartureTime > trainB.scheduledDepartureTime
+            trainA.scheduledDepartureTime.getTime() - trainB.scheduledDepartureTime.getTime()
         );
   });
 };
