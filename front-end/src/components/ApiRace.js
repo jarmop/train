@@ -1,16 +1,7 @@
 import React, {Component} from 'react';
 import * as service from 'services/TrackerService';
-import 'styles/Tracker.css';
-import {addLeadingZero} from 'services/service';
-
-const formatDate = (timestamp) => {
-  let date = new Date(timestamp);
-  return addLeadingZero(date.getHours())
-      + ':'
-      + addLeadingZero(date.getMinutes())
-      + ':'
-      + addLeadingZero(date.getSeconds());
-};
+import 'styles/ApiRace.css';
+import {formatDate} from 'utilities';
 
 class ApiRace extends Component {
   constructor(props) {
@@ -24,11 +15,13 @@ class ApiRace extends Component {
         longitude: 0,
         latitude: 0,
         speed: 0,
+        updated: new Date(),
       },
       data2: {
         longitude: 0,
         latitude: 0,
         speed: 0,
+        updated: new Date(),
       }
     };
   }
@@ -53,7 +46,8 @@ class ApiRace extends Component {
               latitude,
               speed,
               updated,
-            }
+            },
+            oldData1: {...this.state.data1}
           });
         })
         .catch(message => {
@@ -68,7 +62,8 @@ class ApiRace extends Component {
               latitude,
               speed,
               updated,
-            }
+            },
+            oldData2: {...this.state.data2},
           });
         })
         .catch(message => {
@@ -88,9 +83,9 @@ class ApiRace extends Component {
   }
 
   render() {
-    let {data1, data2, stations} = this.state;
+    let {data1, data2, oldData1, oldData2, stations} = this.state;
 
-    if (!stations) {
+    if (!stations || !oldData1 || !oldData2) {
       return '';
     }
 
@@ -98,18 +93,18 @@ class ApiRace extends Component {
         <div className="tracker">
           <div>
             <b>rata.digitraffic.fi</b>
-            <Map data={data1} stations={stations}/>
+            <Map data={data1} oldData={oldData1} stations={stations}/>
           </div>
           <div>
             <b>junatkartalla</b>
-            <Map data={data2} stations={stations}/>
+            <Map data={data2} oldData={oldData2} stations={stations}/>
           </div>
         </div>
     );
   }
 }
 
-let Map = ({data, stations}) => {
+let Map = ({data, oldData, stations}) => {
   let width = 160;
   let height = 200;
   let x = width / 2;
@@ -122,15 +117,30 @@ let Map = ({data, stations}) => {
 
   return (
       <div className="map-container">
-        <div>
-          Longitude: {data.longitude.toFixed(4)}
-          <br/>
-          Latitude: {data.latitude.toFixed(4)}
-          <br/>
-          Speed: {data.speed}
-          <br/>
-          Updated: {formatDate(data.updated)}
-        </div>
+        <table>
+          <tbody>
+            <tr>
+              <th>Longitude:</th>
+              <td>{data.longitude.toFixed(4)}</td>
+              <td>({(data.longitude - oldData.longitude).toFixed(4)})</td>
+            </tr>
+            <tr>
+              <th>Latitude:</th>
+              <td>{data.latitude.toFixed(4)}</td>
+              <td>({(data.latitude - oldData.latitude).toFixed(4)})</td>
+            </tr>
+            <tr>
+              <th>Speed:</th>
+              <td>{data.speed}</td>
+              <td>({data.speed - oldData.speed})</td>
+            </tr>
+            <tr>
+              <th>Updated:</th>
+              <td>{formatDate(data.updated)}</td>
+              <td>({parseInt((data.updated.getTime() - oldData.updated.getTime()) / 1000)} s)</td>
+            </tr>
+          </tbody>
+        </table>
         <svg width={width} height={height} className="map">
           {stations.map(station =>
               <Station

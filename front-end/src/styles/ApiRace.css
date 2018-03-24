@@ -1,0 +1,20 @@
+.tracker {
+    /*margin: 5px;*/
+    display: flex;
+}
+
+.tracker > div {
+    margin-right: 5px;
+}
+
+.map-container {
+    font-size: 12px;
+}
+
+.map-container th {
+    text-align: left;
+}
+
+.map {
+    border: 1px solid black;
+}
