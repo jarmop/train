@@ -5,9 +5,15 @@ const KEHARATA_TRAIN_LETTERS = ['P', 'I'];
 const mapStationNameToStationShortCode = {
   'kannelmaki': 'KAN',
   'huopalahti': 'HPL',
+  'helsinki': 'HKI',
 };
 
-let train: {number: int};
+type Train = {
+  number: int,
+  code: string,
+  scheduledDepartureTime: Date,
+  track: int,
+};
 
 export const getTrainsByStation = (stationName) => {
   let stationShortCode = mapStationNameToStationShortCode[stationName];
@@ -23,12 +29,7 @@ export const getTrainsByStation = (stationName) => {
               )
               .pop();
 
-          let trainObject: {
-            number: int,
-            code: string,
-            scheduledDepartureTime: Date,
-            track: int,
-          } = {
+          let trainObject: Train = {
             number: train.trainNumber,
             code: train.commuterLineID,
             scheduledDepartureTime: new Date(departureTimetable.scheduledTime),

@@ -8,6 +8,7 @@ import {getUrl} from '../utilities';
 let urlNameToHumanReadableName = {
   'kannelmaki': 'Kannelmäki',
   'huopalahti': 'Huopalahti',
+  'helsinki': 'Helsinki',
 };
 
 class App extends Component {

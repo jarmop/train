@@ -20,7 +20,7 @@ class App extends Component {
           </header>
           <main>
             <Route exact path={getUrl('/')} component={Home}/>
-            <Route path={getUrl('/station/:station(kannelmaki|huopalahti)')} component={Station}/>
+            <Route path={getUrl('/station/:station')} component={Station}/>
             <Route exact path={getUrl('/:train')} component={Train}/>
           </main>
         </div>
@@ -34,6 +34,7 @@ let Home = () => (
     <div>
       <Link to={getUrl('/station/kannelmaki')} className="station-link">Kannelmäki</Link>
       <Link to={getUrl('/station/huopalahti')} className="station-link">Huopalahti</Link>
+      <Link to={getUrl('/station/helsinki')} className="station-link">Helsinki</Link>
     </div>
 );
 
