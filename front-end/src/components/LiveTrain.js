@@ -25,7 +25,11 @@ class LiveTrain extends Component {
     return (
         <div className="live-train">
           <div className="live-train__map">
-            <Map/>
+            <Map
+                startStationName={'Malminkartano'}
+                endStationName={'Kannelmäki'}
+                trainProgress={0.3}
+            />
           </div>
           <div className="live-train__data">
             <Data
@@ -50,8 +54,8 @@ class LiveTrain extends Component {
 
 export default LiveTrain;
 
-let Map = ({}) => {
-  let width = 150;
+let Map = ({startStationName, endStationName, trainProgress}) => {
+  let width = 100;
   let height = 20;
   let stationStrokeWidth = 1;
   let stationRadius = height / 2 - stationStrokeWidth;
@@ -59,17 +63,17 @@ let Map = ({}) => {
   let trackLength = width - 2 * stationRadius;
   let trackEnd = trackStart + trackLength;
   let trackY = height / 2;
-  let trainProgress = 0.5;
   let trainX = trackStart + trainProgress * trackLength;
   let trainRadius = 5;
   return (
       <div className="live-train-map">
+        <div className="live-train-map__station-name live-train-map__station-name--start">
+          {startStationName}
+        </div>
         <svg
             width={width}
             height={height}
-            style={{
-              // border: '1px solid black'
-            }}
+            className="live-train-map__track"
         >
           <line
               x1={trackStart}
@@ -103,57 +107,16 @@ let Map = ({}) => {
                 + (trainX + 2 * trainRadius) + ',' + trackY
                 + ' '
                 + trainX + ',' + (trackY - trainRadius)
-                }
+              }
               fill="red"
           />
         </svg>
+        <div className="live-train-map__station-name">
+          {endStationName}
+        </div>
       </div>
   );
 };
-
-// let Map2 = ({}) => (
-//     <div className="live-train-map">
-//       <div className="live-train-map__track">
-//         <div
-//             className="live-train-map__station"
-//             style={{
-//               left: 0,
-//             }}
-//         >
-//           <div
-//               className="live-train-map__station-name"
-//               style={{
-//                 left: -50,
-//               }}
-//           >
-//             Malminkartano
-//           </div>
-//         </div>
-//         <div
-//             className="live-train-map__train"
-//             style={{
-//               left: '50%',
-//             }}
-//         >
-//         </div>
-//         <div
-//             className="live-train-map__station"
-//             style={{
-//               right: 0,
-//             }}
-//         >
-//           <div
-//               className="live-train-map__station-name"
-//               style={{
-//                 right: -50,
-//               }}
-//           >
-//             Pohjois-Haaga
-//           </div>
-//         </div>
-//       </div>
-//     </div>
-// );
 
 let Data = ({data, oldData}) => (
     <table>

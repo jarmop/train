@@ -1,48 +1,21 @@
 .live-train-map {
     display: flex;
-    align-items: center;
+    /*align-items: center;*/
     justify-content: center;
     margin: 10px;
 }
 
-/*.live-train-map {*/
-    /*display: flex;*/
-    /*align-items: center;*/
-    /*justify-content: center;*/
-    /*height: 30px;*/
-    /*margin: 10px;*/
-/*}*/
+.live-train-map__station-name {
+    width: 110px;
+    font-size: 1em;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.live-train-map__station-name--start {
+    text-align: right;
+}
 
 .live-train-map__track {
-    display: flex;
-    align-items: center;
-    position: relative;
-    border: 2px solid black;
-    width: 200px;
-}
-
-.live-train-map__station {
-    --diameter: 20px;
-    border: 1px solid black;
-    border-radius: 50%;
-    width: var(--diameter);
-    height: var(--diameter);
-    background-color: white;
-    position: absolute;
-    left: 40px;
-}
-
-.live-train-map__station-name {
-    position: absolute;
-}
-
-.live-train-map__train {
-    --diameter: 20px;
-    border: 1px solid black;
-    border-radius: 50%;
-    width: var(--diameter);
-    height: var(--diameter);
-    background-color: white;
-    position: absolute;
-    left: 40px;
+    margin: 0 5px;
 }
