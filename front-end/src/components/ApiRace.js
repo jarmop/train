@@ -122,34 +122,44 @@ let Map = ({data, oldData, stations}) => {
           <tr>
             <th>Longitude:</th>
             <td>{data.longitude.toFixed(4)}</td>
-            {oldData &&
-            <td>({(data.longitude - oldData.longitude).toFixed(4)})</td>
-            }
+            <td>
+              (
+              {oldData &&
+                (data.longitude - oldData.longitude).toFixed(4)
+              }
+              )
+            </td>
           </tr>
           <tr>
             <th>Latitude:</th>
             <td>{data.latitude.toFixed(4)}</td>
-            {oldData &&
-            <td>({(data.latitude - oldData.latitude).toFixed(4)})</td>
-            }
+            <td>
+              (
+              {oldData &&
+                (data.latitude - oldData.latitude).toFixed(4)
+              }
+              )
+            </td>
           </tr>
           <tr>
             <th>Speed:</th>
             <td>{data.speed}</td>
-            {oldData &&
-            <td>({data.speed - oldData.speed})</td>
-            }
+            <td>
+              (
+              {oldData && data.speed - oldData.speed}
+              )
+            </td>
           </tr>
           <tr>
             <th>Updated:</th>
             <td>{formatTime(data.updated)}</td>
-            {oldData &&
             <td>
-              ({parseInt(
-                (data.updated.getTime() - oldData.updated.getTime()) / 1000
-            )} s)
+              (
+              {oldData && parseInt(
+                  (data.updated.getTime() - oldData.updated.getTime()) / 1000
+              )}
+              s )
             </td>
-            }
           </tr>
           </tbody>
         </table>
