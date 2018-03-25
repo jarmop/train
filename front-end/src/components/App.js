@@ -6,6 +6,7 @@ import ApiRace from 'components/ApiRace';
 import Detail from 'components/Detail';
 import Station from 'components/Station';
 import {getUrl} from 'utilities';
+import LiveTrain from './LiveTrain';
 
 class App extends Component {
   constructor(props) {
@@ -40,7 +41,8 @@ let Home = () => (
 
 let Train = ({match}) => (
     <div>
-      <Detail trainNumber={match.params.train}/>
-      <ApiRace trainNumber={match.params.train}/>
+      {/*<Detail trainNumber={match.params.train}/>*/}
+      {/*<ApiRace trainNumber={match.params.train}/>*/}
+      <LiveTrain trainNumber={match.params.train}/>
     </div>
 );

@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {Link} from 'react-router-dom';
-import {getTrainsByStation} from 'services/TrainsService';
+import {getTrainsByStation} from 'services/StationService';
 import {formatTimeShort} from 'utilities';
 import 'styles/Station.css';
 import {getUrl} from '../utilities';
@@ -46,7 +46,7 @@ class App extends Component {
             </thead>
             <tbody>
             {trains.map(train =>
-                <tr className="station-train-table__train">
+                <tr key={train.number} className="station-train-table__train">
                   <td className="station-train-table__element">
                     {formatTimeShort(train.scheduledDepartureTime)}
                   </td>
