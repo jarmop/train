@@ -9,6 +9,8 @@ type LiveTrain = {
 };
 
 const makeLiveTrain = (location, schedule) => {
+  // console.log(location);
+  // console.log(schedule);
   let train = {
     longitude: location.location.coordinates[0],
     latitude: location.location.coordinates[1],
@@ -31,6 +33,7 @@ const makeLiveTrain = (location, schedule) => {
             endStationName = endStation.name;
 
             if (startEvent.hasOwnProperty('actualTime')) {
+              console.log('between stations');
               // is between stations
               let startLocation = {latitude: startStation.latitude, longitude: startStation.longitude};
               let endLocation = {latitude: endStation.latitude, longitude: endStation.longitude};
@@ -51,6 +54,8 @@ const makeLiveTrain = (location, schedule) => {
           speed: train.speed,
           updated: new Date(train.timestamp),
         };
+
+        console.log(liveTrain);
 
         return liveTrain;
       });
@@ -80,6 +85,7 @@ export const getLiveTrain = (trainNumber) => {
 const getTrainLocation = (trainNumber) => {
   let CACHE_KEY = 'getTrainLocation';
   return new Promise((resolve, reject) => {
+    // let location = JSON.parse(localStorage.getItem(CACHE_KEY));
     let location = false;//JSON.parse(localStorage.getItem(CACHE_KEY));
     if (location) {
       resolve(location);
@@ -101,6 +107,7 @@ const getTrainLocation = (trainNumber) => {
 const getTrainSchedule = (trainNumber) => {
   let CACHE_KEY = 'getTrainSchedule';
   return new Promise((resolve, reject) => {
+    // let schedule = JSON.parse(localStorage.getItem(CACHE_KEY));
     let schedule = false;//JSON.parse(localStorage.getItem(CACHE_KEY));
     if (schedule) {
       resolve(schedule);
@@ -109,9 +116,9 @@ const getTrainSchedule = (trainNumber) => {
           .then(train => {
             if (train.length === 1) {
               train = train.pop();
-              localStorage.setItem(
-                  CACHE_KEY, JSON.stringify(train.timeTableRows));
-              resolve(train.timeTableRows);
+              let timeTableRows = train.timeTableRows.filter(event => event.trainStopping);
+              localStorage.setItem(CACHE_KEY, JSON.stringify(timeTableRows));
+              resolve(timeTableRows);
             } else {
               reject('not found');
             }

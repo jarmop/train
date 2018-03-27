@@ -42,7 +42,8 @@ let Home = () => (
 let Train = ({match}) => (
     <div>
       {/*<Detail trainNumber={match.params.train}/>*/}
-      {/*<ApiRace trainNumber={match.params.train}/>*/}
       <LiveTrain trainNumber={match.params.train}/>
+      ****************
+      <ApiRace trainNumber={match.params.train}/>
     </div>
 );

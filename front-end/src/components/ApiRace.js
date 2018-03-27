@@ -39,7 +39,7 @@ class ApiRace extends Component {
   updateLocation() {
     service.getLocation(this.state.trainNumber)
         .then(({longitude, latitude, speed, updated}) => {
-          console.log('update 1');
+          // console.log('update 1');
           this.setState({
             data1: {
               longitude,
@@ -53,22 +53,22 @@ class ApiRace extends Component {
         .catch(message => {
           console.log(message);
         });
-    service.getLocation2(this.state.trainNumber)
-        .then(({longitude, latitude, speed, updated}) => {
-          console.log('update 2');
-          this.setState({
-            data2: {
-              longitude,
-              latitude,
-              speed,
-              updated,
-            },
-            oldData2: {...this.state.data2},
-          });
-        })
-        .catch(message => {
-          console.log(message);
-        });
+    // service.getLocation2(this.state.trainNumber)
+    //     .then(({longitude, latitude, speed, updated}) => {
+    //       console.log('update 2');
+    //       this.setState({
+    //         data2: {
+    //           longitude,
+    //           latitude,
+    //           speed,
+    //           updated,
+    //         },
+    //         oldData2: {...this.state.data2},
+    //       });
+    //     })
+    //     .catch(message => {
+    //       console.log(message);
+    //     });
   }
 
   componentDidMount() {
@@ -95,10 +95,10 @@ class ApiRace extends Component {
             <b>rata.digitraffic.fi</b>
             <Map data={data1} oldData={oldData1} stations={stations}/>
           </div>
-          <div>
-            <b>junatkartalla</b>
-            <Map data={data2} oldData={oldData2} stations={stations}/>
-          </div>
+          {/*<div>*/}
+            {/*<b>junatkartalla</b>*/}
+            {/*<Map data={data2} oldData={oldData2} stations={stations}/>*/}
+          {/*</div>*/}
         </div>
     );
   }

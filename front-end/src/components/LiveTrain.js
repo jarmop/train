@@ -7,12 +7,24 @@ class LiveTrain extends Component {
   constructor(props) {
     super(props);
 
+    this.isPollingEnabled = true;
+
     this.state = {
       liveTrain: null,
     };
   }
 
-  componentDidMount() {
+  poll() {
+    setTimeout(() => {
+      if (this.isPollingEnabled) {
+        this.updateLiveTrain();
+        this.poll();
+      }
+
+    }, 5000);
+  }
+
+  updateLiveTrain() {
     let {trainNumber} = this.props;
     getLiveTrain(trainNumber)
         .then(liveTrain => {
@@ -24,6 +36,15 @@ class LiveTrain extends Component {
         .catch(message => {
           // console.log(message);
         })
+  }
+
+  componentDidMount() {
+    this.updateLiveTrain();
+    this.poll();
+  }
+
+  componentWillUnmount() {
+    this.isPollingEnabled = false;
   }
 
   render() {
