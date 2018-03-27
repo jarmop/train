@@ -19,3 +19,7 @@
 .live-train-map__track {
     margin: 0 5px;
 }
+
+.live-train__data th {
+    text-align: right;
+}

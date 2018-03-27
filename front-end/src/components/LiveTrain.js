@@ -7,43 +7,47 @@ class LiveTrain extends Component {
   constructor(props) {
     super(props);
 
-    this.state = {};
+    this.state = {
+      liveTrain: null,
+    };
   }
 
   componentDidMount() {
     let {trainNumber} = this.props;
-    // getLiveTrain(trainNumber)
-    //     .then(liveTrain => {
-    //       console.log(liveTrain);
-    //     })
-    //     .catch(message => {
-    //       console.log(message);
-    //     })
+    getLiveTrain(trainNumber)
+        .then(liveTrain => {
+          // console.log(liveTrain);
+          this.setState({
+            liveTrain: {...liveTrain},
+          });
+        })
+        .catch(message => {
+          // console.log(message);
+        })
   }
 
   render() {
+    if (!this.state.liveTrain) {
+      return 'Loading...';
+    }
+
+    let {startStationName, endStationName, progress, speed, updated} = this.state.liveTrain;
+
     return (
         <div className="live-train">
           <div className="live-train__map">
             <Map
-                startStationName={'Malminkartano'}
-                endStationName={'Kannelmäki'}
-                trainProgress={0.3}
+                startStationName={startStationName}
+                endStationName={endStationName}
+                trainProgress={progress}
             />
           </div>
           <div className="live-train__data">
             <Data
                 data={{
-                  longitude: 1,
-                  latitude: 2,
-                  speed: 2,
-                  updated: new Date(),
-                }}
-                oldData={{
-                  longitude: 1,
-                  latitude: 2,
-                  speed: 2,
-                  updated: new Date(),
+                  progress: progress,
+                  speed: speed,
+                  updated: updated,
                 }}
             />
           </div>
@@ -118,28 +122,16 @@ let Map = ({startStationName, endStationName, trainProgress}) => {
   );
 };
 
-let Data = ({data, oldData}) => (
+let Data = ({data}) => (
     <table>
       <tbody>
       <tr>
         <th>Speed:</th>
         <td>{data.speed}</td>
-        <td>
-          (
-          {oldData && data.speed - oldData.speed}
-          )
-        </td>
       </tr>
       <tr>
         <th>Updated:</th>
         <td>{formatTime(data.updated)}</td>
-        <td>
-          (
-          {oldData && parseInt(
-              (data.updated.getTime() - oldData.updated.getTime()) / 1000
-          )}
-          s )
-        </td>
       </tr>
       </tbody>
     </table>

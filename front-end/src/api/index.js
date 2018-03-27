@@ -5,8 +5,9 @@ const URL_STATION = 'https://rata.digitraffic.fi/api/v1/live-trains/station/[STA
     '&minutes_before_departure=60' +
     '&minutes_after_departure=5'
 ;
-
 const URL_TRAIN_LOCATION = 'https://rata.digitraffic.fi/api/v1/train-locations/latest/[TRAIN_NUMBER]';
+const URL_STATIONS = 'https://rata.digitraffic.fi/api/v1/metadata/stations';
+const URL_TRAIN = 'https://rata.digitraffic.fi/api/v1/trains/latest/[TRAIN_NUMBER]';
 
 export const fetchTrainsByStation = (
     stationShortCode,
@@ -36,4 +37,14 @@ export const fetchTrainLocation = (trainNumber) => {
             reject(error);
           })
   );
+};
+
+export const fetchStations = () => {
+  return fetch(URL_STATIONS)
+      .then(response => response.json());
+};
+
+export const fetchTrain = (trainNumber) => {
+  return fetch(URL_TRAIN.replace(/\[TRAIN_NUMBER\]/, trainNumber))
+      .then(response => response.json());
 };
