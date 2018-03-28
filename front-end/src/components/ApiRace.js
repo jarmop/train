@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import * as service from 'services/TrackerService';
 import 'styles/ApiRace.css';
 import {formatTime} from 'utilities';
+import Map from 'components/Map';
 
 class ApiRace extends Component {
   constructor(props) {
@@ -104,108 +105,6 @@ class ApiRace extends Component {
   }
 }
 
-let Map = ({data, oldData, stations}) => {
-  let width = 175;
-  let height = 200;
-  let x = width / 2;
-  let y = height / 2;
 
-  // 0.01 coord point = 100px
-  let scale = 10000;
-  let latRatio = 4 / 10 * scale;
-  let lonRatio = 23 / 100 * scale;
-
-  return (
-      <div className="map-container">
-        <table>
-          <tbody>
-          <tr>
-            <th>Longitude:</th>
-            <td>{data.longitude.toFixed(4)}</td>
-            <td>
-              (
-              {oldData &&
-                (data.longitude - oldData.longitude).toFixed(4)
-              }
-              )
-            </td>
-          </tr>
-          <tr>
-            <th>Latitude:</th>
-            <td>{data.latitude.toFixed(4)}</td>
-            <td>
-              (
-              {oldData &&
-                (data.latitude - oldData.latitude).toFixed(4)
-              }
-              )
-            </td>
-          </tr>
-          <tr>
-            <th>Speed:</th>
-            <td>{data.speed}</td>
-            <td>
-              (
-              {oldData && data.speed - oldData.speed}
-              )
-            </td>
-          </tr>
-          <tr>
-            <th>Updated:</th>
-            <td>{formatTime(data.updated)}</td>
-            <td>
-              (
-              {oldData && parseInt(
-                  (data.updated.getTime() - oldData.updated.getTime()) / 1000
-              )}
-              s )
-            </td>
-          </tr>
-          </tbody>
-        </table>
-        <svg width={width} height={height} className="map">
-          {stations.map(station =>
-              <Station
-                  key={station.stationShortCode}
-                  x={x + (station.longitude - data.longitude) * lonRatio}
-                  y={y - (station.latitude - data.latitude) * latRatio}
-                  name={station.stationName}
-              />
-          )}
-          <Train x={x} y={y} color={'green'}/>
-        </svg>
-      </div>
-  );
-};
-
-let Station = ({x, y, name}) => {
-  let radius = 6;
-  let strokeWidth = 1;
-  return (
-      <svg>
-        <circle
-            cx={x}
-            cy={y}
-            r={radius - strokeWidth}
-            style={{
-              fill: 'red', stroke: 'black', strokeWidth: strokeWidth,
-            }}
-        />
-        <text x={x + radius} y={y + radius} fill="black"
-              style={{fontSize: 12}}>{name}</text>
-      </svg>
-  );
-};
-
-let Train = ({x, y, color}) => (
-    <circle
-        cx={x}
-        cy={y}
-        r={5}
-        style={{
-          fill: color, stroke: 'black', strokeWidth: 1,
-        }}
-    />
-);
 
 export default ApiRace;
