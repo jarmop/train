@@ -146,17 +146,61 @@ let Map = ({startStationName, endStationName, progress, speed}) => {
   );
 };
 
-let Data = ({data}) => (
-    <table>
-      <tbody>
-      <tr>
-        <th>Speed:</th>
-        <td>{data.speed}</td>
-      </tr>
-      <tr>
-        <th>Updated:</th>
-        <td>{formatTime(data.updated)}</td>
-      </tr>
-      </tbody>
-    </table>
-);
+class Data extends Component {
+  constructor(props) {
+    super(props);
+
+    this.isClockRunning = true;
+    this.state = {
+      date: new Date(),
+    };
+  }
+
+  updateClock() {
+    setTimeout(() => {
+      if (this.isClockRunning) {
+        this.setState({
+          date: new Date(),
+        });
+        this.updateClock();
+      }
+    }, 1000);
+  }
+
+  componentDidMount() {
+    this.updateClock();
+  }
+
+  componentWillUnmount() {
+    this.isClockRunning = false;
+  }
+
+  render() {
+    let {data} = this.props;
+    let currentTime = new Date();
+    let timeDifference = Math.floor((currentTime.getTime() - data.updated.getTime()) / 1000);
+
+    return (
+        <table>
+          <tbody>
+          <tr>
+            <th>Speed:</th>
+            <td>{data.speed}</td>
+          </tr>
+          <tr>
+            <th>Updated:</th>
+            <td>{formatTime(data.updated)}</td>
+          </tr>
+          <tr>
+            <th>Current time:</th>
+            <td>{formatTime(currentTime)}</td>
+          </tr>
+          <tr>
+            <th>Time difference:</th>
+            <td>{timeDifference}</td>
+          </tr>
+          </tbody>
+        </table>
+    );
+  }
+}
