@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {getLiveTrain} from 'services/LiveTrainService';
+import {updateLiveTrain} from 'services/LiveTrainService';
 import {formatTime} from 'utilities';
 import 'styles/LiveTrain.css';
 
@@ -26,7 +26,7 @@ class LiveTrain extends Component {
 
   updateLiveTrain() {
     let {trainNumber} = this.props;
-    getLiveTrain(trainNumber)
+    updateLiveTrain(trainNumber, this.state.liveTrain)
         .then(liveTrain => {
           // console.log(liveTrain);
           this.setState({
@@ -52,7 +52,7 @@ class LiveTrain extends Component {
       return 'Loading...';
     }
 
-    let {startStationName, endStationName, progress, speed, updated} = this.state.liveTrain;
+    let {startStationName, endStationName, progress, speed, locationUpdated, locationChanged} = this.state.liveTrain;
 
     return (
         <div className="live-train">
@@ -69,7 +69,8 @@ class LiveTrain extends Component {
                 data={{
                   progress: progress,
                   speed: speed,
-                  updated: updated,
+                  locationUpdated: locationUpdated,
+                  locationChanged: locationChanged,
                 }}
             />
           </div>
@@ -178,7 +179,8 @@ class Data extends Component {
   render() {
     let {data} = this.props;
     let currentTime = new Date();
-    let timeDifference = Math.floor((currentTime.getTime() - data.updated.getTime()) / 1000);
+    let updateDifference = Math.floor((currentTime.getTime() - data.locationUpdated.getTime()) / 1000);
+    let changeDifference = Math.floor((currentTime.getTime() - data.locationChanged.getTime()) / 1000);
 
     return (
         <table>
@@ -188,16 +190,18 @@ class Data extends Component {
             <td>{data.speed}</td>
           </tr>
           <tr>
-            <th>Updated:</th>
-            <td>{formatTime(data.updated)}</td>
+            <th>Last updated:</th>
+            <td>{formatTime(data.locationUpdated)}</td>
+            <td>({updateDifference} seconds ago)</td>
+          </tr>
+          <tr>
+            <th>Last changed:</th>
+            <td>{formatTime(data.locationChanged)}</td>
+            <td>({changeDifference} seconds ago)</td>
           </tr>
           <tr>
             <th>Current time:</th>
             <td>{formatTime(currentTime)}</td>
-          </tr>
-          <tr>
-            <th>Time difference:</th>
-            <td>{timeDifference}</td>
           </tr>
           </tbody>
         </table>
