@@ -22,31 +22,41 @@ const makeLiveTrain = (location, schedule) => {
         let startStationName = '';
         let endStationName = '';
         let progress = 0;
+        let trainLocation = {latitude: train.latitude, longitude: train.longitude};
         for (let i = 0; i < schedule.length; i++) {
           let event = schedule[i];
           if (event.type === 'ARRIVAL' && !event.hasOwnProperty('actualTime')) {
-            let startEvent = schedule[i - 1];
-            let endEvent = event;
-            let startStation = stations[startEvent.stationShortCode];
-            let endStation = stations[endEvent.stationShortCode];
+            let startDeparture = schedule[i - 1];
+            let endArrival = event;
+
+            let startStation = stations[startDeparture.stationShortCode];
+            let endStation = stations[endArrival.stationShortCode];
+            let startLocation = {latitude: startStation.latitude, longitude: startStation.longitude};
+            let endLocation = {latitude: endStation.latitude, longitude: endStation.longitude};
+            let stationRadius = 200;
+            let isAtStartStation = geolib.isPointInCircle(trainLocation, startLocation, stationRadius);
+            // let isAtEndStation = geolib.isPointInCircle(trainLocation, endLocation, stationRadius);
+            // console.log('is at start: ' + isAtStartStation);
+            // console.log('is at end: ' + isAtEndStation);
+            // let fullDistance = geolib.getDistance(startLocation, endLocation); THIS FAILS!!!
+
+            let startDistance = geolib.getDistance(trainLocation, startLocation);
+            let endDistance = geolib.getDistance(trainLocation, endLocation);
+            let fullDistance = geolib.getDistance(startLocation, endLocation);
+
+            // console.log('fullD: ' + fullDistance);
+            // console.log('startD: ' + startDistance);
+            // console.log('edndD: ' + endDistance);
+            // console.log('diff: ' + (fullDistance - startDistance - endDistance));
+
+            progress = isAtStartStation && train.speed === 0 ? 0 : startDistance / fullDistance;
             startStationName = startStation.name;
             endStationName = endStation.name;
-
-            if (startEvent.hasOwnProperty('actualTime')) {
-              console.log('between stations');
-              // is between stations
-              let startLocation = {latitude: startStation.latitude, longitude: startStation.longitude};
-              let endLocation = {latitude: endStation.latitude, longitude: endStation.longitude};
-              let trainLocation = {latitude: train.latitude, longitude: train.longitude};
-              let fullDistance = geolib.getDistance(startLocation, endLocation);
-              let startDistance = geolib.getDistance(trainLocation, startLocation);
-              let endDistance = geolib.getDistance(trainLocation, endLocation);
-              progress = startDistance / fullDistance;
-            }
 
             break;
           }
         }
+
         let liveTrain: LiveTrain = {
           startStationName: startStationName,
           endStationName: endStationName,

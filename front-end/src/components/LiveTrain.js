@@ -60,7 +60,8 @@ class LiveTrain extends Component {
             <Map
                 startStationName={startStationName}
                 endStationName={endStationName}
-                trainProgress={progress}
+                progress={progress}
+                speed={speed}
             />
           </div>
           <div className="live-train__data">
@@ -79,7 +80,7 @@ class LiveTrain extends Component {
 
 export default LiveTrain;
 
-let Map = ({startStationName, endStationName, trainProgress}) => {
+let Map = ({startStationName, endStationName, progress, speed}) => {
   let width = 100;
   let height = 20;
   let stationStrokeWidth = 1;
@@ -88,7 +89,7 @@ let Map = ({startStationName, endStationName, trainProgress}) => {
   let trackLength = width - 2 * stationRadius;
   let trackEnd = trackStart + trackLength;
   let trackY = height / 2;
-  let trainX = trackStart + trainProgress * trackLength;
+  let trainX = trackStart + progress * trackLength;
   let trainRadius = 5;
   return (
       <div className="live-train-map">
@@ -125,16 +126,18 @@ let Map = ({startStationName, endStationName, trainProgress}) => {
               strokeWidth={stationStrokeWidth}
           />
           <circle cx={trainX} cy={trackY} r={trainRadius} fill="red"/>
-          <polygon
-              points={
-                trainX + ',' + (trackY + trainRadius)
-                + ' '
-                + (trainX + 2 * trainRadius) + ',' + trackY
-                + ' '
-                + trainX + ',' + (trackY - trainRadius)
-              }
-              fill="red"
-          />
+          {speed &&
+            <polygon
+                points={
+                  trainX + ',' + (trackY + trainRadius)
+                  + ' '
+                  + (trainX + 2 * trainRadius) + ',' + trackY
+                  + ' '
+                  + trainX + ',' + (trackY - trainRadius)
+                }
+                fill="red"
+            />
+          }
         </svg>
         <div className="live-train-map__station-name">
           {endStationName}
