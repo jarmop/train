@@ -31,10 +31,10 @@ export const addLeadingZero = (value) => {
 
 const formatUrlDate = (date) => {
   return date.getFullYear()
-      + '-'
-      + addLeadingZero(date.getMonth() + 1)
-      + '-'
-      + addLeadingZero(date.getDate());
+    + '-'
+    + addLeadingZero(date.getMonth() + 1)
+    + '-'
+    + addLeadingZero(date.getDate());
 };
 
 const getLocationMetres = (location) => {
@@ -54,9 +54,9 @@ export const getSectionTrack = (section) => {
 };
 
 export const getSectionLength = (section) => {
-  let {startLocation, endLocation} = section.ranges[0];
+  let { startLocation, endLocation } = section.ranges[0];
   return (endLocation.kilometres * 1000 + endLocation.metres) -
-      (startLocation.kilometres * 1000 + startLocation.metres);
+    (startLocation.kilometres * 1000 + startLocation.metres);
 };
 
 export const getTrainTrackingData = () => {
@@ -88,23 +88,23 @@ export const getLogStartTime = (log) => {
 // };
 
 export const updateOccupied = (log, occupied, previousDate, newDate) => {
-  let date = new Date();
+  // let date = new Date();
   // console.log(formatReadableTime(previousDate));
   // console.log(formatReadableTime(newDate));
 
   let logPart = log
-      .filter(entry => {
-        let entryTime = (new Date(entry.timestamp)).getTime();
-        return entryTime >= previousDate.getTime() && entryTime <=
-            newDate.getTime();
-      });
+    .filter(entry => {
+      let entryTime = (new Date(entry.timestamp)).getTime();
+      return entryTime >= previousDate.getTime() && entryTime <=
+        newDate.getTime();
+    });
 
   let newOccupied = [...occupied];
   for (let entry of logPart) {
-    if (entry.type == 'OCCUPY') {
+    if (entry.type === LOG_ENTRY_TYPE_OCCUPY) {
       // console.log('occupy', formatSectionId(entry.station, entry.trackSection));
       newOccupied.push(formatSectionId(entry.station, entry.trackSection));
-    } else if (entry.type == 'RELEASE') {
+    } else if (entry.type === LOG_ENTRY_TYPE_RELEASE) {
       // console.log('release', formatSectionId(entry.station, entry.trackSection));
       newOccupied = newOccupied.filter(id => {
         return id !== formatSectionId(entry.station, entry.trackSection);
@@ -118,24 +118,24 @@ export const updateOccupied = (log, occupied, previousDate, newDate) => {
 };
 
 export const updateOccupiedReverse = (log, occupied, previousDate, newDate) => {
-  let date = new Date();
+  // let date = new Date();
   // console.log(formatReadableTime(previousDate));
   // console.log(formatReadableTime(newDate));
 
   let logPart = log
-      .filter(entry => {
-        let entryTime = (new Date(entry.timestamp)).getTime();
-        return entryTime >= newDate.getTime() && entryTime <=
-            previousDate.getTime();
-      })
-      .sort((a, b) => b.id - a.id);
+    .filter(entry => {
+      let entryTime = (new Date(entry.timestamp)).getTime();
+      return entryTime >= newDate.getTime() && entryTime <=
+        previousDate.getTime();
+    })
+    .sort((a, b) => b.id - a.id);
 
   let newOccupied = [...occupied];
   for (let entry of logPart) {
-    if (entry.type == 'RELEASE') {
+    if (entry.type === LOG_ENTRY_TYPE_RELEASE) {
       // console.log('occupy', formatSectionId(entry.station, entry.trackSection));
       newOccupied.push(formatSectionId(entry.station, entry.trackSection));
-    } else if (entry.type == 'OCCUPY') {
+    } else if (entry.type === LOG_ENTRY_TYPE_OCCUPY) {
       // console.log('release', formatSectionId(entry.station, entry.trackSection));
       newOccupied = newOccupied.filter(id => {
         return id !== formatSectionId(entry.station, entry.trackSection);
@@ -155,14 +155,14 @@ export const getOccupied = (trainNumber) => {
   // console.log(formatUrlDate(date));
 
   let url = URL_TRAIN_TRACKING
-      .replace(/\[DATE\]/, formatUrlDate(date))
-      .replace(/\[TRAIN_NUMBER\]/, trainNumber)
-      .replace(
-          /\[VERSION\]/,
-          trainTrackingVersions.hasOwnProperty(trainNumber)
-              ? trainTrackingVersions[trainNumber]
-              : 1000
-      );
+    .replace(/\[DATE\]/, formatUrlDate(date))
+    .replace(/\[TRAIN_NUMBER\]/, trainNumber)
+    .replace(
+      /\[VERSION\]/,
+      trainTrackingVersions.hasOwnProperty(trainNumber)
+        ? trainTrackingVersions[trainNumber]
+        : 1000
+    );
 
   // console.log(trainTrackingVersions);
 
@@ -173,34 +173,34 @@ export const getOccupied = (trainNumber) => {
   };
   return new Promise((resolve, reject) => {
     fetch(url).then(response => response.json())
-        .then(log => {
-          let occupiedUpdated = false;
-          for (let i = 0; i < log.length; i++) {
-            let entry = log[i];
-            if (entry.type === LOG_ENTRY_TYPE_OCCUPY) {
-              let sectionId = formatSectionId(
-                  entry.station, entry.trackSection
-              );
-              // console.log(sectionId);
-              occupied.next = entry.nextStation;
-              occupied.previous = entry.previousStation;
-              occupied.current = mapSectionIdToStation.hasOwnProperty(sectionId)
-                  ? mapSectionIdToStation[sectionId]
-                  : sectionId;
+      .then(log => {
+        let occupiedUpdated = false;
+        for (let i = 0; i < log.length; i++) {
+          let entry = log[i];
+          if (entry.type === LOG_ENTRY_TYPE_OCCUPY) {
+            let sectionId = formatSectionId(
+              entry.station, entry.trackSection
+            );
+            // console.log(sectionId);
+            occupied.next = entry.nextStation;
+            occupied.previous = entry.previousStation;
+            occupied.current = mapSectionIdToStation.hasOwnProperty(sectionId)
+              ? mapSectionIdToStation[sectionId]
+              : sectionId;
 
-              trainTrackingVersions[trainNumber] = entry.version;
-              occupiedUpdated = true;
+            trainTrackingVersions[trainNumber] = entry.version;
+            occupiedUpdated = true;
 
-              break;
-            }
+            break;
           }
+        }
 
-          if (occupiedUpdated) {
-            resolve(occupied);
-          } else {
-            reject('No new occupy entries.');
-          }
+        if (occupiedUpdated) {
+          resolve(occupied);
+        } else {
+          reject('No new occupy entries.');
+        }
 
-        });
+      });
   });
 };
