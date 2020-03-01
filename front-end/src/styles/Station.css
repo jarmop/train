@@ -14,7 +14,6 @@
 }
 
 .station-train-table__element--centered {
-    padding: 0 10px;
     text-align: center;
 }
 
@@ -38,6 +37,6 @@
     color: black;
     border: 1px solid black;
     border-radius: 50%;
-    width: 22px;
-    height: 22px;
+    width: 40px;
+    height: 40px;
 }

@@ -11,7 +11,9 @@ main {
 
 .station-link {
     display: block;
-    margin: 10px;
+    margin: 20px;
+    padding: 10px;
+    background-color: #eaeaea;
 }
 
 /*.track {*/
