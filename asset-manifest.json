@@ -1,11 +1,26 @@
 {
-  "main.css": "static/css/main.7ea81db1.css",
-  "main.css.map": "static/css/main.7ea81db1.css.map",
-  "main.js": "static/js/main.d7be2765.js",
-  "main.js.map": "static/js/main.d7be2765.js.map",
-  "static/media/fontawesome-webfont.eot": "static/media/fontawesome-webfont.674f50d2.eot",
-  "static/media/fontawesome-webfont.svg?v=4.7.0": "static/media/fontawesome-webfont.912ec66d.svg",
-  "static/media/fontawesome-webfont.ttf?v=4.7.0": "static/media/fontawesome-webfont.b06871f2.ttf",
-  "static/media/fontawesome-webfont.woff2?v=4.7.0": "static/media/fontawesome-webfont.af7ae505.woff2",
-  "static/media/fontawesome-webfont.woff?v=4.7.0": "static/media/fontawesome-webfont.fee66e71.woff"
+  "files": {
+    "main.css": "/train/static/css/main.75441c4f.chunk.css",
+    "main.js": "/train/static/js/main.1faa126c.chunk.js",
+    "main.js.map": "/train/static/js/main.1faa126c.chunk.js.map",
+    "runtime-main.js": "/train/static/js/runtime-main.0da6fdf3.js",
+    "runtime-main.js.map": "/train/static/js/runtime-main.0da6fdf3.js.map",
+    "static/css/2.dde651e0.chunk.css": "/train/static/css/2.dde651e0.chunk.css",
+    "static/js/2.8cbcf387.chunk.js": "/train/static/js/2.8cbcf387.chunk.js",
+    "static/js/2.8cbcf387.chunk.js.map": "/train/static/js/2.8cbcf387.chunk.js.map",
+    "index.html": "/train/index.html",
+    "precache-manifest.c3c3a08104411e2a26514bc99931cf1c.js": "/train/precache-manifest.c3c3a08104411e2a26514bc99931cf1c.js",
+    "service-worker.js": "/train/service-worker.js",
+    "static/css/2.dde651e0.chunk.css.map": "/train/static/css/2.dde651e0.chunk.css.map",
+    "static/css/main.75441c4f.chunk.css.map": "/train/static/css/main.75441c4f.chunk.css.map",
+    "static/js/2.8cbcf387.chunk.js.LICENSE.txt": "/train/static/js/2.8cbcf387.chunk.js.LICENSE.txt",
+    "static/media/font-awesome.css": "/train/static/media/fontawesome-webfont.fee66e71.woff"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.0da6fdf3.js",
+    "static/css/2.dde651e0.chunk.css",
+    "static/js/2.8cbcf387.chunk.js",
+    "static/css/main.75441c4f.chunk.css",
+    "static/js/main.1faa126c.chunk.js"
+  ]
 }
