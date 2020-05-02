@@ -2,7 +2,7 @@
   "name": "train",
   "version": "0.1.0",
   "private": true,
-  "homepage": "http://jarmop.github.io/train/",
+  "homepage": "https://jarmop.github.io/train/",
   "dependencies": {
     "font-awesome": "^4.7.0",
     "geolib": "^3.2.1",
